@@ -13,7 +13,7 @@ const validateUserId = async (req, res, next) =>{
   try {
     const user = await Posts.getById(id)
     if(!user){
-      res.status(404).json({message: ""})
+      res.status(404).json({ message: "user not found" })
     }
     else{
       req.user = user
