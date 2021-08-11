@@ -1,17 +1,17 @@
+const Users = require("../users/users-model")
+
 function logger(req, res, next) {
   console.log(
-    `[${new Date().toISOString()}] ${req.method} to ${req.url} from ${req.get(
-      'Origin'
-    )}`
+    `[${new Date().toISOString()}] METHOD: ${req.method} URL: ${req.url}`
   );
 
   next();
 }
 
 const validateUserId = async (req, res, next) =>{
-  const {id} = req.params
+   const {id} = req.params
   try {
-    const user = await Posts.getById(id)
+    const user = await Users.getById(id)
     if(!user){
       res.status(404).json({ message: "user not found" })
     }
@@ -21,8 +21,21 @@ const validateUserId = async (req, res, next) =>{
     }
   }
   catch(error){
-    res.status(500).json({message: ""})
+    res.status(500).json({message: "Internal server error"})
   }
+  // Users.getById(id)
+  //   .then(user =>{
+  //     if (user) {
+  //       req.user = user
+  //       next()
+  //     }
+  //     else {
+  //       res.status(404).json({ message: "user not found" })
+  //     }
+  //   })
+  //   .catch(error){
+  //       res.status(500).json({message: "Internal server error"})
+  // }
 }
 
 function validateUser(req, res, next) {
